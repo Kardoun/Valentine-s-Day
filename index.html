@@ -1,80 +1,78 @@
+
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Valentine Quiz für dich ❤️</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; text-align: center; background: linear-gradient(to bottom, #ff9a9e, #fecfef); padding: 20px; }
-    h1 { color: #e91e63; }
-    .question { font-weight: bold; margin: 30px 0 10px; font-size: 1.2em; }
-    .answers label { display: block; margin: 10px; background: white; padding: 10px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; }
-    #submit { background: #e91e63; color: white; padding: 15px 30px; border: none; border-radius: 25px; font-size: 1.1em; cursor: pointer; margin-top: 20px; }
-    #results { margin-top: 30px; font-size: 1.5em; padding: 20px; background: white; border-radius: 10px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CUSTOMIZE: Browser tab title -->
+    <title>Will You Be My Valentine? 💝</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Valentine Quiz nur für dich! 💕</h1>
-  <p>Beantworte die Fragen zu uns...</p>
-  <div id="quiz"></div>
-  <button id="submit">Quiz abschicken! ❤️</button>
-  <div id="results"></div>
+    <!-- Floating Background Elements -->
+    <div class="floating-elements">
+        <!-- Hearts and bears will be added here by JavaScript -->
+    </div>
 
-  <script>
-    const questions = [
-      {
-        question: "Wann war unser erstes Date?",
-        answers: {
-          a: "14. Februar",
-          b: "1. Januar",
-          c: "Valentinstag"
-        },
-        correct: "a"
-      },
-      // Füge hier deine eigenen Fragen hinzu, z.B.:
-      {
-        question: "Mein Lieblingsessen ist?",
-        answers: {
-          a: "Pizza",
-          b: "Sushi",
-          c: "Pasta"
-        },
-        correct: "b"
-      }
-      // Mehr? Kopier das Format und passe an.
-    ];
+    <!-- Main Content Container -->
+    <div class="container">
+        <h1 id="valentineTitle"></h1>
+        
+        <!-- Music Player -->
+        <div id="musicControls" class="music-controls">
+            <button id="musicToggle" class="music-btn">🎵 Play Music</button>
+            <audio id="bgMusic" loop>
+                <source id="musicSource" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
 
-    const quiz = document.getElementById('quiz');
-    const results = document.getElementById('results');
-    const submit = document.getElementById('submit');
+        <!-- First Question -->
+        <div class="question-section" id="question1">
+            <h2 id="question1Text"></h2>
+            <button class="cute-btn" onclick="moveButton(this)" id="yesBtn1"></button>
+            <button class="cute-btn" onclick="moveButton(this)" id="noBtn1"></button>
+            <!-- CUSTOMIZE: Secret answer text -->
+            <div class="secret-answer">
+                <button class="cute-btn special" onclick="showNextQuestion(2)" id="secretAnswerBtn"></button>
+            </div>
+        </div>
 
-    function showQuiz() {
-      const output = [];
-      questions.forEach((q, i) => {
-        const answers = [];
-        for (letter in q.answers) {
-          answers.push(
-            `<label>
-              <input type="radio" name="q${i}" value="${letter}">
-              ${letter}) ${q.answers[letter]}
-            </label>`
-          );
-        }
-        output.push(`<div class="question">Q${i+1}: ${q.question}</div><div class="answers">${answers.join('')}</div>`);
-      });
-      quiz.innerHTML = output.join('');
-    }
+        <!-- Second Question (Love Meter) -->
+        <div class="question-section hidden" id="question2">
+            <h2 id="question2Text"></h2>
+            <!-- Love meter settings: min="0" max="10000" -->
+            <div class="love-meter">
+                <input type="range" min="0" max="10000" value="100" class="slider" id="loveMeter">
+                <p>
+                    <span class="love-value-container"><span id="startText"></span> (<span id="loveValue">100</span>%)</span>
+                    <span id="extraLove" class="hidden"></span>
+                </p>
+            </div>
+            <button class="cute-btn" onclick="showNextQuestion(3)" id="nextBtn"></button>
+        </div>
 
-    function showResults() {
-      let correct = 0;
-      questions.forEach((q, i) => {
-        const selected = document.querySelector(`input[name="q${i}"]:checked`);
-        if (selected && selected.value === q.correct) correct++;
-      });
-      results.innerHTML = `Du hast ${correct} von ${questions.length} richtig! Ich liebe dich! 😍`;
-    }
+        <!-- Final Question -->
+        <div class="question-section hidden" id="question3">
+            <h2 id="question3Text"></h2>
+            <button class="cute-btn final-yes" onclick="celebrate()" id="yesBtn3"></button>
+            <button class="cute-btn" onclick="moveButton(this)" id="noBtn3"></button>
+        </div>
 
-    showQuiz();
-    submit.onclick = showResults;
-  </script>
+        <!-- CUSTOMIZE: Celebration message -->
+        <div class="celebration hidden" id="celebration">
+            <h2 id="celebrationTitle"></h2>
+            <p class="celebration-text" id="celebrationMessage"></p>
+            <p class="celebration-text" id="celebrationEmojis"></p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="theme.js"></script>
+    <script src="script.js"></script>
 </body>
-</html>
+</html> 
